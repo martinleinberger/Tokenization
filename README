@@ -1,1 +1,17 @@
-This file was created by PyCharm 2.6.3 for binding GitHub repository
+Some tests with tokenization based on the *Improving the tokenisation of identifier names* paper
+
+steps in the paper:
+
+1. Identifier names are tokenised using separator characters and the internal
+capitalisation boundaries.
+2. Any token containing the UCLC boundary is tokenised with the support of
+an oracle.
+3. Any identifier names with tokens containing digits are reviewed and to-
+kenised using an oracle and a set of heuristics.
+4. Any identifier name composed of a single token is investigated to determine
+whether it is a recognised word or a neologism constructed from the simple
+addition of known prefixes and suffixes to a recognised word.
+5. Any remaining single token identifier names are tokenised by recursive al-
+gorithms. Candidate tokenisations are investigated to reduce oversplitting,
+before being scored with weight being given to tokens found in the project-
+specific vocabulary.
