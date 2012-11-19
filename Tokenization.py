@@ -5,8 +5,8 @@ import json
 import getopt
 
 
-# Problematic ALTORENDSTATE
-# because "alto" is a perfectly fine word
+# Problematic getSubDepts
+# because "gets" is a perfectly fine word => [gets, ubdepts]
 
 
 def loadList(fileName):
@@ -27,7 +27,7 @@ def oracle(term):
 	return (term in wordList)
 
 
-def refineTokens(start, t, oracle):
+def greedyTokens(start, t, oracle):
 	if t == 'LinkedList':
 		print 'test'
 	end = len(t)
@@ -39,13 +39,13 @@ def refineTokens(start, t, oracle):
 		if start == end:
 			return [t[start:]]
 
-	return [ t[start:end] ] + refineTokens(end, t, oracle)
+	return [ t[start:end] ] + greedyTokens(end, t, oracle)
 
 def prepareToken(t):
 	return t.lower()
 
 # ----------- command line parsing --------------
-inputFile  = './Company.java.tokens.json'
+inputFile  = './input/Cut.java.tokens.json'
 outputFile = './results.json'
 
 opts, args = getopt.getopt(sys.argv[1:], 'hi:o:')
@@ -62,8 +62,8 @@ for opt, arg in opts:
 tokens = json.load(open(inputFile))
 result = []
 for token in tokens:
-	if token['class'] == 'kw' or token['class'] == 'de':
-		result += [refineTokens(0, prepareToken(token['text']), oracle)]
+	if token['class'] == 'kw' or token['class'] == 'de' or token['class'] == 'me':
+		result += [greedyTokens(0, prepareToken(token['text']), oracle)]
 
 print json.dumps(result)
 open(outputFile, 'w').write(json.dumps(result))
