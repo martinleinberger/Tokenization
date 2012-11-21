@@ -1,70 +1,87 @@
 __author__ = 'martin'
 
-import sys
-import json
-import getopt
-
+import re
+import Oracle
 
 # Problematic getSubDepts
 # because "gets" is a perfectly fine word => [gets, ubdepts]
 
 
-def loadList(fileName):
-	list = []
-	file = open(fileName)
-	line = file.readline().replace('\n', '')
+#def greedyTokens(start, t, oracle):
+#	end = len(t)
+#	if (start == end):
+#		return []
 
-	while line:
-		list.append(unicode(line))
-		line = file.readline().replace('\n', '')
-	file.close()
-	return list
+#	while not oracle(t[start:end]):
+#		end -= 1
+#		if start == end:
+#			return [t[start:]]
 
-wordList = loadList('english-words.10')
-wordList += loadList('english-words.20')
-
-def oracle(term):
-	return (term in wordList)
+#	return [ t[start:end] ] + greedyTokens(end, t, oracle)
 
 
-def greedyTokens(start, t, oracle):
-	if t == 'LinkedList':
-		print 'test'
-	end = len(t)
-	if (start == end):
-		return []
+#difference on splitOnChange and splitPenultimate becomes clear with "isOSGiCompatible"
 
-	while not oracle(t[start:end]):
-		end -= 1
-		if start == end:
-			return [t[start:]]
+#try to split on case change - StyledEditorKit => [Styled, Editor, Kit]
+def splitOnChange(token):
+	boundaries = []
+	lastStart = 0
+	for idx, char in enumerate(token):
+		if char.isupper():
+			if idx-1 > 0 and token[idx-1].islower():
+				boundaries.append(token[lastStart:idx])
+				#boundaries.append((lastStart, idx))
+				lastStart = idx
 
-	return [ t[start:end] ] + greedyTokens(end, t, oracle)
+	boundaries.append(token[lastStart:len(token)])
+	return boundaries
 
-def prepareToken(t):
-	return t.lower()
+#try to split one before case changes - HTMLEditro => [HTML, Editor]
+def splitPenultimate(token):
+	boundaries = []
+	lastStart = 0
+	for idx, char in enumerate(token):
+		if char.isupper():
+			if idx+1 < len(token) and token[idx+1].islower():
+				if idx-1 > 0:
+					boundaries.append(token[lastStart:idx])
+					lastStart = idx
 
-# ----------- command line parsing --------------
-inputFile  = './input/Cut.java.tokens.json'
-outputFile = './results.json'
+	boundaries.append(token[lastStart:len(token)])
+	return boundaries
 
-opts, args = getopt.getopt(sys.argv[1:], 'hi:o:')
-for opt, arg in opts:
-	if opt == '-h':
-		print 'Tokenization.py -i <inputFile> -o outputFile'
-		sys.exit()
-	elif opt in ['-i', '-ifile']:
-		inputFile = arg
-	elif opt in ['-o', '-ofile']:
-		outputFile = arg
-# ------------------------------------------------
+#both methods applied, then it's checked which one provides better results
+def splitOnUCLC(token, debug=False):
+	refined1 = splitOnChange(token)
+	hits1 = 0
+	for t in refined1:
+		if Oracle.oracle(t.lower()):
+			hits1 += 1
 
-tokens = json.load(open(inputFile))
-result = []
-for token in tokens:
-	if token['class'] == 'kw' or token['class'] == 'de' or token['class'] == 'me':
-		result += [greedyTokens(0, prepareToken(token['text']), oracle)]
+	refined2 = splitPenultimate(token)
+	hits2 = 0
+	for t in refined2:
+		if Oracle.oracle(t.lower()):
+			hits2 += 1
 
-print json.dumps(result)
-open(outputFile, 'w').write(json.dumps(result))
+	if debug:
+		print (refined1, hits1)
+		print (refined2, hits2)
 
+	if hits2 > hits1:
+		return refined2
+	return refined1
+
+
+# buchstabeNummer und NummerBuchstabe fehlen noch
+def splitOnSeperators(token):
+	return re.split(' _ | \. ', token)
+
+
+#print splitOnChange('StyledEditorKit')
+#print splitPenultimate('HTMLEditor')
+
+#print '---------------------------------'
+#print splitOnUCLC('StyledEditorKit', True)
+#print splitOnSeperators('test')
+#print splitOnUCLC('isOSGiCompatible', True)

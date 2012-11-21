@@ -2,6 +2,19 @@ Some tests with tokenization based on the *Improving the tokenisation of identif
 
 steps in the paper:
 
+1. Identifier names are first tokenised using boundaries marked by separator
+characters or the transitions between letters and digits.
+2. The tokens from step 1 are investigated for the presence of changes from
+lower case to upper case (the primary internal capitalisation boundary) and
+split on those boundaries.
+3. Tokens found to contain the UCLC boundary – as found in HTMLEditor –
+are investigated using an oracle to determine whether splitting the token
+following the penultimate upper case letter, or at the change from upper to
+lower case results in a better tokenisation.
+4. Each token is investigated using a recursive algorithm with the support of
+an oracle to determine whether it can be divided further.
+
+-----------------------------------------------------------------------------
 1. Identifier names are tokenised using separator characters and the internal
 capitalisation boundaries.
 2. Any token containing the UCLC boundary is tokenised with the support of
