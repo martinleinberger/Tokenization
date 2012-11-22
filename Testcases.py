@@ -3,14 +3,30 @@ __author__ = 'martin'
 import unittest
 import Tokenization
 
-def listCompare(list1, list2):
-	if len(list1) == len(list2):
-		for i in list1:
-			if i not in list2:
-				return False
-		return True
-	return False
+def isEqual(a, b):
+	for c in a:
+		if c not in b:
+			return False
+	if not len(a) == len(b):
+		return False
+	return True
 
-class SimpleTest(unittest.TestCase):
+#general test cases
+class OSGiTest(unittest.TestCase):
 	def runTest(self):
-		self.assertTrue(listCompare(Tokenization.splitOnUCLC('isOSGiCompatible'), ['is', 'OSGi', 'Compatible']), 'isOSGiCompatible not correctly tokenized')
+		token = 'isOSGiCompatible'
+		expected = ['is', 'OSGi', 'Compatible']
+		self.assertTrue(isEqual(Tokenization.tokenize(token), expected), token + ' not correctly tokenized')
+
+class HTMLEditorTest(unittest.TestCase):
+	def runTest(self):
+		token = 'HTMLEditor'
+		expected = ['HTML', 'Editor']
+		self.assertTrue(isEqual(Tokenization.tokenize(token), expected), token + ' is not correctly tokenized')
+
+class StyledEditorKitTest(unittest.TestCase):
+	def runTest(self):
+		token = 'StyledEditorKit'
+		expected = ['Styled', 'Editor', 'Kit']
+		self.assertTrue(isEqual(Tokenization.tokenize(token), expected), token + ' is not correctly tokenized')
+

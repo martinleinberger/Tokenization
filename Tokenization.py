@@ -7,21 +7,25 @@ import Oracle
 # because "gets" is a perfectly fine word => [gets, ubdepts]
 
 
-#def greedyTokens(start, t, oracle):
-#	end = len(t)
-#	if (start == end):
-#		return []
+def greedy(start, t):
+	end = len(t)
+	if start == end:
+		return []
 
-#	while not oracle(t[start:end]):
-#		end -= 1
-#		if start == end:
-#			return [t[start:]]
+	while not Oracle.oracle(t[start:end].lower()):
+		end -= 1
+		if start == end:
+			return [t[start:]]
 
-#	return [ t[start:end] ] + greedyTokens(end, t, oracle)
+	return [ t[start:end] ] + greedy(end, t)
+
+def refineUnknown(token):
+	if not Oracle.oracle(token):
+		return greedy(0, token)
+	return [ token ]
 
 
 #difference on splitOnChange and splitPenultimate becomes clear with "isOSGiCompatible"
-
 #try to split on case change - StyledEditorKit => [Styled, Editor, Kit]
 def splitOnChange(token):
 	boundaries = []
@@ -30,13 +34,12 @@ def splitOnChange(token):
 		if char.isupper():
 			if idx-1 > 0 and token[idx-1].islower():
 				boundaries.append(token[lastStart:idx])
-				#boundaries.append((lastStart, idx))
 				lastStart = idx
 
 	boundaries.append(token[lastStart:len(token)])
 	return boundaries
 
-#try to split one before case changes - HTMLEditro => [HTML, Editor]
+#try to split one before case changes - HTMLEditor => [HTML, Editor]
 def splitPenultimate(token):
 	boundaries = []
 	lastStart = 0
@@ -77,11 +80,11 @@ def splitOnUCLC(token, debug=False):
 def splitOnSeperators(token):
 	return re.split(' _ | \. ', token)
 
-
-#print splitOnChange('StyledEditorKit')
-#print splitPenultimate('HTMLEditor')
-
-#print '---------------------------------'
-#print splitOnUCLC('StyledEditorKit', True)
-#print splitOnSeperators('test')
-#print splitOnUCLC('isOSGiCompatible', True)
+def tokenize(token):
+	result = []
+	firstStep = splitOnSeperators(token)
+	for t1 in firstStep:
+		secondStep = splitOnUCLC(t1)
+		for t2 in secondStep:
+			result += refineUnknown(t2)
+	return result

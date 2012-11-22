@@ -6,7 +6,7 @@ import json
 import Tokenization
 
 # ----------- command line parsing --------------
-inputFile  = './input/Cut.java.tokens.json'
+inputFile  = './input/Company.java.tokens.json'
 outputFile = './results.json'
 
 opts, args = getopt.getopt(sys.argv[1:], 'hi:o:')
@@ -24,7 +24,7 @@ tokens = json.load(open(inputFile))
 result = []
 for token in tokens:
 	if token['class'] == 'kw' or token['class'] == 'de' or token['class'] == 'me':
-		result += []
+		result += [ Tokenization.tokenize(token['text']) ]
 
 print json.dumps(result)
 open(outputFile, 'w').write(json.dumps(result))
