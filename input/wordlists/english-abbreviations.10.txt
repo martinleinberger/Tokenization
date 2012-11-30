@@ -1,0 +1,12 @@
+cum
+depts
+Depts
+HMTL
+html
+SQL
+sql
+css
+softlang
+org
+Dom
+http

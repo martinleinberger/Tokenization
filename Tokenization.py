@@ -1,10 +1,9 @@
 __author__ = 'martin'
 
 import re
+import os.path
 import Oracle
-
-# Problematic getSubDepts
-# because "gets" is a perfectly fine word => [gets, ubdepts]
+import json
 
 
 def greedy(start, t):
@@ -18,6 +17,7 @@ def greedy(start, t):
 			return [t[start:]]
 
 	return [ t[start:end] ] + greedy(end, t)
+
 
 def refineUnknown(token):
 	if not Oracle.oracle(token):
@@ -39,6 +39,7 @@ def splitOnChange(token):
 	boundaries.append(token[lastStart:len(token)])
 	return boundaries
 
+
 #try to split one before case changes - HTMLEditor => [HTML, Editor]
 def splitPenultimate(token):
 	boundaries = []
@@ -52,6 +53,7 @@ def splitPenultimate(token):
 
 	boundaries.append(token[lastStart:len(token)])
 	return boundaries
+
 
 #both methods applied, then it's checked which one provides better results
 def splitOnUCLC(token, debug=False):
@@ -78,13 +80,25 @@ def splitOnUCLC(token, debug=False):
 
 # buchstabeNummer und NummerBuchstabe fehlen noch
 def splitOnSeperators(token):
-	return re.split(' _ | \. ', token)
+	return re.split('_|\.|\s|-|/|=|\"', token)
 
-def tokenize(token):
+
+def tokenizeToken(token):
 	result = []
 	firstStep = splitOnSeperators(token)
 	for t1 in firstStep:
 		secondStep = splitOnUCLC(t1)
 		for t2 in secondStep:
 			result += refineUnknown(t2)
+	return result
+
+
+def tokenizeFile(tokensFile, endingToRemove = '.tokens.json'):
+	tokens = json.load(open(tokensFile))
+	result = []
+	for token in tokens:
+		if token['class'] == 'kw' or token['class'] == 'de' or token['class'] == 'me':
+			result += [ tokenizeToken(token['text']) ]
+	head, tail = os.path.split(tokensFile)
+	result += [ tokenizeToken(tail.replace(endingToRemove, '')) ]
 	return result

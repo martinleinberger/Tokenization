@@ -17,7 +17,7 @@ def load(fileName, buffer=None):
 	return buffer
 
 def oracle(term):
-	return wordList.has_key(term) or abbrevList.has_key(term)
+	return wordList.has_key(term.lower()) or abbrevList.has_key(term)
 
 
 wordList = load('input/wordlists/english-words.10.txt')
