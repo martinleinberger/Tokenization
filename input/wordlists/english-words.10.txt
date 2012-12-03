@@ -1,5 +1,5 @@
-Runtime
-Adapter
+runtime
+adapter
 recognize
 netbeans
 boolean
@@ -9,6 +9,8 @@ serialize
 throwable
 center
 color
+runtime
+redmond
 a
 abilities
 ability

@@ -80,7 +80,7 @@ def splitOnUCLC(token, debug=False):
 
 # buchstabeNummer und NummerBuchstabe fehlen noch
 def splitOnSeperators(token):
-	return re.split('_|\.|\s|-|/|=|\"', token)
+	return re.split('_|\.|\s|-|/|=|\"|:|;|<|>', token)
 
 
 def tokenizeToken(token):
