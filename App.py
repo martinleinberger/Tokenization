@@ -48,10 +48,11 @@ def walkOverContribution(contributionPath, ignoreFunc = None, endsWith = '.token
 cBasePath = '/Daten/101companies/101web/data/resources/contributions'
 contributions = os.listdir(cBasePath)
 
+
 #contributionResults = {}
 listOfContribs = []
 for contribution in contributions:
-	print 'processing ' + contribution
+	print'processing ' + contribution
 	result = walkOverContribution(os.path.join(cBasePath, contribution), ignore)
 	if not result == {}:
 		listOfContribs.append(contribution)

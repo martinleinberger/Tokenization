@@ -93,11 +93,11 @@ def tokenizeToken(token):
 	return result
 
 
-def tokenizeFile(tokensFile, endingToRemove = '.tokens.json'):
+def tokenizeFile(tokensFile, tokenClasses = ['de', 'me'], endingToRemove = '.tokens.json'):
 	tokens = json.load(open(tokensFile))
 	result = []
 	for token in tokens:
-		if token['class'] == 'kw' or token['class'] == 'de' or token['class'] == 'me':
+		if token['class'] in tokenClasses:
 			result += [ tokenizeToken(token['text']) ]
 	head, tail = os.path.split(tokensFile)
 	result += [ tokenizeToken(tail.replace(endingToRemove, '')) ]

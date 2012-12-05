@@ -1024,10 +1024,10 @@ completions
 comprehensibly
 compressible
 computerate
-compËre
-compËred
-compËres
-compËring
+comp√®re
+comp√®red
+comp√®res
+comp√®ring
 comradely
 conceitedly
 concernedly
@@ -1282,7 +1282,7 @@ cuppa
 cuppas
 curated
 curating
-curaÁao
+cura√ßao
 curbside
 curmudgeonly
 curricular
@@ -1303,8 +1303,8 @@ cutout
 cutout's
 cutouts
 cyan
-cybercafÈ
-cybercafÈs
+cybercaf√©
+cybercaf√©s
 cyborg
 cyborg's
 cyborgs
@@ -1482,7 +1482,7 @@ dhows
 diagrammatically
 dialectical
 dialectics
-diamantÈ
+diamant√©
 diaspora
 diatonic
 dickens
@@ -1630,8 +1630,8 @@ doorstepping
 doorstop
 doorstop's
 doorstops
-doppelg‰nger
-doppelg‰ngers
+doppelg√§nger
+doppelg√§ngers
 dosh
 doss
 dossed
@@ -1729,9 +1729,9 @@ dustsheet
 dustsheets
 duvet's
 duvets
-dÈcolletage
-dÈcolletage's
-dÈcolletages
+d√©colletage
+d√©colletage's
+d√©colletages
 earpiece
 earpieces
 earthbound
@@ -2152,9 +2152,9 @@ gammy
 gangsta
 gangstas
 ganja
-garÁon
-garÁon's
-garÁons
+gar√ßon
+gar√ßon's
+gar√ßons
 gasbag
 gasbag's
 gasbags
@@ -2234,7 +2234,7 @@ giver
 giver's
 givers
 glaciation
-glacÈ
+glac√©
 glam
 glasnost
 glasshouse
@@ -3198,7 +3198,7 @@ mawkishness
 mayoress
 mayoress's
 mayoresses
-maÒana
+ma√±ana
 meanderings
 meanie
 meanie's
@@ -3560,7 +3560,7 @@ oilmen
 oilskins
 oldish
 oldster
-olÈ
+ol√©
 oncologist
 oncologist's
 oncologists
@@ -4222,8 +4222,8 @@ protectionist
 protectionist's
 protectionists
 prototypical
-protÈgÈe
-protÈgÈes
+prot√©g√©e
+prot√©g√©es
 provenances
 provincially
 provocateur
@@ -5059,7 +5059,7 @@ sociologically
 sociopolitical
 softback
 softcover
-soignÈe
+soign√©e
 soldiery
 solemnities
 solemnness
@@ -6056,7 +6056,7 @@ vivisectionist's
 vivisectionists
 vocationally
 vodkas
-voil‡
+voil√†
 voraciousness
 wadge
 wadges
