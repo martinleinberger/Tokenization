@@ -25,6 +25,7 @@ wordList = load('input/wordlists/english-words.20.txt', wordList)
 wordList = load('input/wordlists/english-words.35.txt', wordList)
 wordList = load('input/wordlists/english-words.40.txt', wordList)
 wordList = load('input/wordlists/english-words.50.txt', wordList)
+wordList = load('input/wordlists/specific-words.txt', wordList)
 
 abbrevList = load('input/wordlists/english-abbreviations.10.txt')
 abbrevList = load('input/wordlists/english-abbreviations.20.txt', abbrevList)
