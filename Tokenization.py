@@ -5,7 +5,9 @@ import os.path
 import Oracle
 import json
 
-
+# try to split up even further to words that are known to the oracle
+# the process starts at the beginning of the word and the end and tries to find it in the oracle,
+# if it doesn't the end pointer is put left one character and so on
 def greedy(start, t):
 	end = len(t)
 	if start == end:
@@ -80,7 +82,7 @@ def splitOnUCLC(token, debug=False):
 
 # buchstabeNummer und NummerBuchstabe fehlen noch
 def splitOnSeperators(token):
-	return re.split('_|\.|\s|-|/|=|\"|:|;|<|>', token)
+	return re.split('_|\.|\s|-|/|=|\"|:|;|<|>|,', token)
 
 
 def tokenizeToken(token):
